@@ -205,11 +205,15 @@ public class LexicalAnalyzer {
                 else if(lexeme.matches("-?\\d+")) {
                     result.add(new Token(Type.NUMLIT, lexeme));		//check if its a digit using regular expression
                  }
+                else if(lexeme.matches("^[a-zA-Z_].*$")) {
+                    result.add(new Token(Type.IDENT, lexeme));		//check if its a digit using regular expression
+                 }
+      
                 else {
-                	  result.add(new Token(Type.IDENT, lexeme));
+                	  result.add(new Token(Type.UNKNOWN, lexeme));
             }
         }
-       
+
                return result;
     }
     public static void main(String[] args) throws FileNotFoundException {
@@ -217,7 +221,7 @@ public class LexicalAnalyzer {
     	List<Token> tokens = null;
 
         try {
-            Scanner s = new Scanner(new File("/Users/sotirisemmanouil/eclipse-workspace/316 project 1/src/test1.pas"));
+            Scanner s = new Scanner(new File("/Users/sotirisemmanouil/git/repository5/316 project 1/src/test1.pas"));
             StringBuilder inputBuilder = new StringBuilder();
 
             while (s.hasNext()) {
@@ -233,9 +237,7 @@ public class LexicalAnalyzer {
         }
 
        for (Token t : tokens) {
-          System.out.print("TOKEN: " + t+"        LEXEME: " + t.getLexeme()+"\n");
-   
-            
+          System.out.print("TOKEN: " + t+"        LEXEME: " + t.getLexeme()+"\n");       
         }
     }
 
