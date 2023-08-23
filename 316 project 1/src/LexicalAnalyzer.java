@@ -208,9 +208,8 @@ public class LexicalAnalyzer {
                 else if(lexeme.matches("^[a-zA-Z_].*$")) {
                     result.add(new Token(Type.IDENT, lexeme));		//check if its a digit using regular expression
                  }
-      
                 else {
-                	  result.add(new Token(Type.UNKNOWN, lexeme));
+                	 result.add(new Token(Type.UNKNOWN, lexeme));
             }
         }
 
