@@ -1,4 +1,4 @@
-# Lexical-Analyzer-
+# Lexical-Analyzer
 ## Performs a Lexical Analysis on a Pascal source code file
 
 This project lexically analyzes a Pascal source code file by taking Pascal lexemes and assigning them to their corresponding token. For example, 
