@@ -206,7 +206,8 @@ public class LexicalAnalyzer {
                     result.add(new Token(Type.NUMLIT, lexeme));		//check if its a digit using regular expression
                  }
                 else if(lexeme.matches("^[a-zA-Z_].*$")) {
-                    result.add(new Token(Type.IDENT, lexeme));		//check if its a digit using regular expression
+                    result.add(new Token(Type.IDENT, lexeme));		
+                  //check if its starts with a letter of the alphabet or underscore using regular expression
                  }
                 else {
                 	 result.add(new Token(Type.UNKNOWN, lexeme));
