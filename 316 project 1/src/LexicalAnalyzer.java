@@ -169,6 +169,9 @@ public class LexicalAnalyzer {
                 else if(lexeme.equals("=")) {
                     result.add(new Token(Type.EQL, lexeme));
                 }
+                else if(lexeme.equalsIgnoreCase("READ")) {
+                    result.add(new Token(Type.READ, lexeme));
+                }
                 else if(lexeme.equals("%")) {
                     result.add(new Token(Type.MOD, lexeme));
                 }
