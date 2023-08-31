@@ -121,7 +121,7 @@ public class LexicalAnalyzer {
               else if(lexeme.endsWith(")")) {
             	  int index = lexeme.indexOf(')');
             	  if(lexeme.startsWith("*")) {
-            		  result.add(new Token(Type.COMMENT, lexeme));
+            		  result.add(new Token(Type.ENDCOMMENT, lexeme));
             	  }
             	  else if(lexeme.substring(0,lexeme.length()-1).matches("-?\\d+")) {
             		  result.add(new Token(Type.NUMLIT, lexeme.substring(0,lexeme.length()-1)));
