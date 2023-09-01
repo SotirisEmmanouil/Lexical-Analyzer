@@ -159,7 +159,10 @@ public class LexicalAnalyzer {
                }
                else if(lexeme.equals("*")) {
                     result.add(new Token(Type.TIMES, lexeme));
-               }
+               }     
+               else if(lexeme.equalsIgnoreCase("+")) {
+            	   result.add(new Token(Type.PLUS, lexeme)); 
+               } 
                 else if(lexeme.equalsIgnoreCase("END.")) {
                     result.add(new Token(Type.END, lexeme));
                 }
