@@ -146,7 +146,15 @@ public class LexicalAnalyzer {
             	   result.add(new Token(Type.WRITE, lexeme.substring(0,5)));
             	   result.add(new Token(Type.LPAREN, lexeme.substring(5,6)));
             	   result.add(new Token(Type.SINQUO, lexeme.substring(6,7)));
+                  if(lexeme.substring(7).matches("^[A-I].*$")) {
             	   result.add(new Token(Type.IDENT, lexeme.substring(7)));
+                  }
+                 else if(lexeme.substring(7).matches("-?\\d+")) {
+            	   result.add(new Token(Type.IDENT, lexeme.substring(7)));
+                }
+                 else {
+                   result.add(new Token(Type.UNKNOWN, lexeme.substring(7)));
+                 }
                }
                else if(lexeme.equalsIgnoreCase("Write")) {
             	   result.add(new Token(Type.WRITE, lexeme)); 
