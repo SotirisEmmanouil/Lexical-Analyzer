@@ -31,7 +31,7 @@ public class LexicalAnalyzer {
        
     }
 
-    public static List<Token> lexicallyAnalyze(String input) {
+        public static List<Token> lexicallyAnalyze(String input) {
        
        List<Token> result = new ArrayList<Token>();
         
@@ -55,7 +55,7 @@ public class LexicalAnalyzer {
               		 result.add(new Token(Type.IDENT, lexeme.substring(1)));
               	   }
             	   else if(lexeme.charAt(1) == '*') {
-                    result.add(new Token(Type.COMMENT, lexeme));
+                    result.add(new Token(Type.BEGCOMMENT, lexeme));
             	   }
             	   
             	   else if(lexeme.charAt(1) == '“') {
@@ -65,7 +65,7 @@ public class LexicalAnalyzer {
                        if(lexeme.substring(1).matches("^[A-I].*$")){
                     	 result.add(new Token(Type.QUOTE, lexeme));
                     	 
-                    	 int index = lexeme.indexOf('”'), index2 = lexeme.indexOf(')');
+                    	 int index = lexeme.indexOf('“'), index2 = lexeme.indexOf(')');
                     	 
                     	 result.add(new Token(Type.IDENT, lexeme.substring(1,index)));
                     	 result.add(new Token(Type.QUOTE, lexeme.substring(index,index2)));
@@ -76,8 +76,15 @@ public class LexicalAnalyzer {
                 	else 
                          result.add(new Token(Type.LPAREN, lexeme));
                 }
+               else if(lexeme.endsWith("');") && lexeme.matches("^[A-I].*$")){
+        	    	int i = lexeme.indexOf(")"), j = lexeme.indexOf(";"), k = lexeme.indexOf("'");
+       	    	  result.add(new Token(Type.IDENT, lexeme.substring(0,k)));
+       	    	  result.add(new Token(Type.SINQUO, lexeme.substring(k,i)));
+       	    	  result.add(new Token(Type.RPAREN, lexeme.substring(i,j)));
+       	    	  result.add(new Token(Type.SEMICOLON, lexeme.substring(j)));
+              }
                
-               else if(lexeme.contains(";")) {
+               else if(lexeme.endsWith(";")) {
             	  
                  if(lexeme.substring(0,lexeme.length()-1).matches("-?\\d+")) {		//using regex check if its a number before the semicolon
             		   result.add(new Token(Type.NUMLIT, lexeme.substring(0,lexeme.length()-1)));
@@ -103,23 +110,24 @@ public class LexicalAnalyzer {
                  	   result.add(new Token(Type.READ, lexeme.substring(0,4)));
                  	   result.add(new Token(Type.LPAREN, lexeme.substring(4,5)));
                  	 
-                 	   if(lexeme.substring(5).matches("^[A-I].*$")) {			//if it contains an IDENT
-                 		   
-                 		   if(lexeme.substring(5).contains(")")) {
-                 		  
+                 	   if(lexeme.substring(5).matches("^[A-I].*$") && lexeme.substring(5).endsWith(");")) {			//if it contains an IDENT
+                 		                   	
                  	     int index = lexeme.indexOf(')'), index2 = lexeme.indexOf(";");
                  		 result.add(new Token(Type.IDENT, lexeme.substring(5,index)));
                  		 result.add(new Token(Type.LPAREN, lexeme.substring(index,index2)));
                  		 result.add(new Token(Type.SEMICOLON, lexeme.substring(index2)));
                  		   
+                 	   }
+                 	     else {
+                 			   result.add(new Token(Type.UNKNOWN, lexeme.substring(5)));
+                 			   
                  		   }
-                 	  }
-                 	   
-                    }
+                 	  }  
           		
                }
               else if(lexeme.endsWith(")")) {
             	  int index = lexeme.indexOf(')');
+            	  
             	  if(lexeme.startsWith("*")) {
             		  result.add(new Token(Type.ENDCOMMENT, lexeme));
             	  }
@@ -133,32 +141,55 @@ public class LexicalAnalyzer {
             		}
             	  else 
             		  result.add(new Token(Type.RPAREN,lexeme));           	              	    
-               } 
+                  } 
                
                else if(lexeme.endsWith(":")) {
-        
-                       //using regex check if its a number before the semicolon
               		   result.add(new Token(Type.IDENT, lexeme.substring(0,lexeme.length()-1)));
               		   result.add(new Token(Type.COLON, lexeme.substring(lexeme.length()-1)));
               	
                  }
+               
                else if(lexeme.startsWith("Write('")) {
             	   result.add(new Token(Type.WRITE, lexeme.substring(0,5)));
             	   result.add(new Token(Type.LPAREN, lexeme.substring(5,6)));
             	   result.add(new Token(Type.SINQUO, lexeme.substring(6,7)));
-                  if(lexeme.substring(7).matches("^[A-I].*$")) {
-            	   result.add(new Token(Type.IDENT, lexeme.substring(7)));
-                  }
-                 else if(lexeme.substring(7).matches("-?\\d+")) {
-            	   result.add(new Token(Type.NUMLIT, lexeme.substring(7)));
-                }
-                 else {
-                   result.add(new Token(Type.UNKNOWN, lexeme.substring(7)));
-                 }
-               }
-               else if(lexeme.equalsIgnoreCase("Write")) {
-            	   result.add(new Token(Type.WRITE, lexeme)); 
-               }
+                   
+            	   if(lexeme.substring(7).length() > 0) {
+            	  
+            		 if(lexeme.substring(7).matches("^[A-I].*$")) {
+            			 
+            		    if(lexeme.substring(7).endsWith("');")){
+                	    	int i = lexeme.indexOf(")"), j = lexeme.indexOf(";"), k = lexeme.indexOf("'");
+                	    	  result.add(new Token(Type.IDENT, lexeme.substring(7,k)));
+                	    	  result.add(new Token(Type.SINQUO, lexeme.substring(k,i)));
+                	    	  result.add(new Token(Type.RPAREN, lexeme.substring(i,j)));
+                	    	  result.add(new Token(Type.SEMICOLON, lexeme.substring(j)));
+            			  }
+            		    else
+            	          result.add(new Token(Type.IDENT, lexeme.substring(7)));
+            		   }
+            	     
+                    else if(lexeme.substring(7).matches("-?\\d+")) {
+                    	  
+                    	if(lexeme.substring(7).endsWith("');")){
+                  	    	int i = lexeme.indexOf(")"), j = lexeme.indexOf(";"), k = lexeme.indexOf("'");
+                  	    	  result.add(new Token(Type.IDENT, lexeme.substring(7,k)));
+                  	    	  result.add(new Token(Type.SINQUO, lexeme.substring(k,i)));
+                  	    	  result.add(new Token(Type.RPAREN, lexeme.substring(i,j)));
+                  	    	  result.add(new Token(Type.SEMICOLON, lexeme.substring(j)));
+              			  }
+                    	
+            	       result.add(new Token(Type.IDENT, lexeme.substring(7)));
+                    }
+                    else {
+                       result.add(new Token(Type.UNKNOWN, lexeme.substring(7)));
+                     }
+                  
+                     }
+            	   else {
+            		   //do nothing
+            	   }
+                }             
                else if(lexeme.equalsIgnoreCase("DIV")) {
             	   result.add(new Token(Type.DIV, lexeme)); 
                }
