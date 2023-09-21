@@ -150,7 +150,7 @@ public class LexicalAnalyzer {
             	   result.add(new Token(Type.IDENT, lexeme.substring(7)));
                   }
                  else if(lexeme.substring(7).matches("-?\\d+")) {
-            	   result.add(new Token(Type.IDENT, lexeme.substring(7)));
+            	   result.add(new Token(Type.NUMLIT, lexeme.substring(7)));
                 }
                  else {
                    result.add(new Token(Type.UNKNOWN, lexeme.substring(7)));
