@@ -115,6 +115,9 @@ public class LexicalAnalyzer {
     	else if(input.equalsIgnoreCase("VAR")) {
     		return Type.VAR;
     	}
+      else if(input.equalsIgnoreCase("FOR")) {
+    		return Type.FOR;
+    	}
     	else if(input.equalsIgnoreCase("CONST")) {
     		return Type.CONST;
     	}
@@ -135,6 +138,9 @@ public class LexicalAnalyzer {
     	}
     	else if(input.equalsIgnoreCase("WHILE")) {
     		return Type.WHILE;
+    	}
+      else if(input.equalsIgnoreCase("TO")) {
+    		return Type.TO;
     	}
     	else if(input.equalsIgnoreCase("DO")) {
     		return Type.DO;
