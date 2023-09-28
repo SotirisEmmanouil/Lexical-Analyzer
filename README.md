@@ -1,7 +1,7 @@
 # Lexical-Analyzer
 ## Performs a Lexical Analysis on a Pascal source code file
 
-This project lexically analyzes a Pascal source code file by taking Pascal lexemes and assigns them a corresponding token. For example, 
+This project lexically analyzes a Pascal source code file by taking Pascal lexemes and assigning them a corresponding token. For example, 
 if the `(*` lexeme appears, the token code `BEGCOMMENT` will be assigned to it or if the lexeme `THEN` appears, the token code `THENSYM` will be 
 assigned to it. The `main` method prints out a side by side comparison of each lexeme and its corresponding token.
 The token types are held in an enumerated type. An ArrayList holds the lexemes that have been assigned a token. I also utilized regular 
